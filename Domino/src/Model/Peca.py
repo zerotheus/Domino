@@ -1,7 +1,10 @@
 from __future__ import annotations
+import pygame ,os, random
 from Lado import Lado
 
 class Peca:
+    imagens = []
+
     ladoSuperior:Lado = None
     ladoInferior:Lado = None
     ConexaoSuperior:Peca = None
@@ -24,6 +27,6 @@ class Peca:
     def getladoInferior(self) -> Lado:
         return self.ladoInferior
             
-        
-         
+    def desenhar(self):        
+        pass     
     
