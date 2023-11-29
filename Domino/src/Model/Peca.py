@@ -1,15 +1,17 @@
 from __future__ import annotations
 import pygame ,os, random
-from Lado import Lado
+from Model.Lado import Lado
 
 class Peca:
     imagens = []
-    ladoSuperior:Lado = None
-    ladoInferior:Lado = None
+    ladoSuperior:Lado 
+    ladoInferior:Lado 
     
-    def __init__(self, ladoSuperior, ladoInferior) -> None:
+    def __init__(self, ladoSuperior:Lado, ladoInferior:Lado) -> None:
         self.ladoSuperior = ladoSuperior
         self.ladoInferior = ladoInferior
+        ladoSuperior.setPeca(self)
+        ladoInferior.setPeca(self)
         pass
     
     def conectar(self,peca:Peca) -> bool:
@@ -19,10 +21,12 @@ class Peca:
         return self.ladoSuperior.conectaComEstaPeca(peca) or self.ladoInferior.conectaComEstaPeca(peca)
         
     def getConexaoSuperior(self):
-        self.ladoSuperior.getConexao()
+        print("conexao superior")
+        return self.ladoSuperior.getConexao()
         
     def getConexaoInferior(self):
-        self.ladoInferior.getConexao()
+        print("conexao inferior")
+        return self.ladoInferior.getConexao()
             
     def getladoSuperior(self) -> Lado:
         return self.ladoSuperior
@@ -30,6 +34,6 @@ class Peca:
     def getladoInferior(self) -> Lado:
         return self.ladoInferior
             
-    def desenhar(self):        
+    def desenhar(self):
+        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))        
         pass     
-    
