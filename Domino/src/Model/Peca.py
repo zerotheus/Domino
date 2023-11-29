@@ -4,12 +4,8 @@ from Lado import Lado
 
 class Peca:
     imagens = []
-
     ladoSuperior:Lado = None
     ladoInferior:Lado = None
-    ConexaoSuperior:Peca = None
-    ConexaoInferior:Peca = None
-    
     
     def __init__(self, ladoSuperior, ladoInferior) -> None:
         self.ladoSuperior = ladoSuperior
@@ -17,9 +13,13 @@ class Peca:
         pass
     
     def conectar(self,peca:Peca):
-        self.ladoSuperior.conectaComEstaPeca(peca)
-        self.ladoInferior.conectaComEstaPeca(peca)
-        pass
+        self.qualDosLadosConecta(peca)
+        
+    def getConexaoSuperior(self):
+        self.ladoSuperior.getConexao()
+        
+    def getConexaoInferior(self):
+        self.ladoInferior.getConexao()
             
     def getladoSuperior(self) -> Lado:
         return self.ladoSuperior
