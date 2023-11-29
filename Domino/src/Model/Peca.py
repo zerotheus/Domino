@@ -1,16 +1,32 @@
-import pygame
-import os
-import random
+from __future__ import annotations
+import pygame ,os, random
+from Lado import Lado
 
 class Peca:
-    valorDeCima = None
-    valorDeBaixo = None
     imagens = []
 
-
-
-
-
-
-
-    def desenhar(self):
+    ladoSuperior:Lado = None
+    ladoInferior:Lado = None
+    ConexaoSuperior:Peca = None
+    ConexaoInferior:Peca = None
+    
+    
+    def __init__(self, ladoSuperior, ladoInferior) -> None:
+        self.ladoSuperior = ladoSuperior
+        self.ladoInferior = ladoInferior
+        pass
+    
+    def conectar(self,peca:Peca):
+        self.ladoSuperior.conectaComEstaPeca(peca)
+        self.ladoInferior.conectaComEstaPeca(peca)
+        pass
+            
+    def getladoSuperior(self) -> Lado:
+        return self.ladoSuperior
+    
+    def getladoInferior(self) -> Lado:
+        return self.ladoInferior
+            
+    def desenhar(self):        
+        pass     
+    
