@@ -12,8 +12,11 @@ class Peca:
         self.ladoInferior = ladoInferior
         pass
     
-    def conectar(self,peca:Peca):
-        self.qualDosLadosConecta(peca)
+    def conectar(self,peca:Peca) -> bool:
+        self.osLadosConectam(peca)
+        
+    def osLadosConectam(self,peca) -> bool:
+        return self.ladoSuperior.conectaComEstaPeca(peca) or self.ladoInferior.conectaComEstaPeca(peca)
         
     def getConexaoSuperior(self):
         self.ladoSuperior.getConexao()
