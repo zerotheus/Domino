@@ -15,7 +15,7 @@ class Peca:
         pass
     
     def conectar(self,peca:Peca) -> bool:
-        self.osLadosConectam(peca)
+        return self.osLadosConectam(peca)
         
     def osLadosConectam(self,peca) -> bool:
         return self.ladoSuperior.conectaComEstaPeca(peca) or self.ladoInferior.conectaComEstaPeca(peca)
