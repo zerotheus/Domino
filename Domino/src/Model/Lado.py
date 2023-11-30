@@ -1,9 +1,6 @@
 from __future__ import annotations
 
 class Lado:
-    valor:int = None
-    conexao = None
-    peca = None
     
     def __init__(self, valor:int) -> None:
         self.valor = valor
