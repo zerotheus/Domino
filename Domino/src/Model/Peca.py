@@ -3,15 +3,13 @@ import pygame ,os, random
 from Model.Lado import Lado
 
 class Peca:
-    imagens = None
-    ladoSuperior:Lado 
-    ladoInferior:Lado 
-    posicaoX:float = 200
-    posicaoY:float = 500
  
     def __init__(self, ladoSuperior:Lado, ladoInferior:Lado) -> None:
         self.ladoSuperior = ladoSuperior
         self.ladoInferior = ladoInferior
+        self.posicaoX:float = 200
+        self.posicaoY:float = 500
+        self.imagens = None 
         ladoSuperior.setPeca(self)
         ladoInferior.setPeca(self)
         pass
