@@ -24,6 +24,9 @@ class Peca:
         print("conexao superior")
         return self.ladoSuperior.getConexao()
         
+    def ehUmaBuxa(self):
+        return self.ladoSuperior.getValor() == self.ladoInferior.getValor() 
+        
     def getConexaoInferior(self):
         print("conexao inferior")
         return self.ladoInferior.getConexao()
@@ -35,5 +38,6 @@ class Peca:
         return self.ladoInferior
             
     def desenhar(self):
-        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))        
+        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))
+        print("Sou uma Buxa?", self.ehUmaBuxa())        
         pass     
