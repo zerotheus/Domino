@@ -32,6 +32,9 @@ class Peca:
         print("conexao superior")
         return self.ladoSuperior.getConexao()
         
+    def ehUmaBuxa(self):
+        return self.ladoSuperior.getValor() == self.ladoInferior.getValor() 
+        
     def getConexaoInferior(self):
         print("conexao inferior")
         return self.ladoInferior.getConexao()
