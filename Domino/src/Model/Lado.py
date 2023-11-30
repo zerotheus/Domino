@@ -26,6 +26,9 @@ class Lado:
     def getValor(self):
        return self.valor
    
+    def tenhoOMesmoValor(self,ladoDeOutraPeca:Lado):
+        return self.valor == ladoDeOutraPeca.getValor()
+   
     def getConexao(self) -> Lado:
        return self.conexao
     
