@@ -49,10 +49,14 @@ class Peca:
         return self.ladoInferior
             
     def desenhar(self,tela):
-        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))
+        self.desenharNoConsole()                                           #peca_(self.ladoSup.valor).(self.ladoInf.valor).png
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','peca_0.0.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(50,50))
         pos_centro_imagem = self.imagem.get_rect(topleft=(self.posicaoX,self.posicaoY)).center
         retangulo = self.imagem.get_rect(center=pos_centro_imagem)
         
         tela.blit(self.imagem,retangulo.topleft)    
+
+    def desenharNoConsole(self):
+        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))
+        print("Sou um buxa?", self.ehUmaBuxa())
