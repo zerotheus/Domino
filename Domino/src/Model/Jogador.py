@@ -28,7 +28,7 @@ class Jogador:
     def jogarPeca(self,posicao:int):
         pecaJogada = self.lista_de_Pecas[posicao]
         self.lista_de_Pecas.remove(posicao)
-        self.passarVez
+        self.passarVez()
         return pecaJogada
     
     def passarVez(self):
@@ -54,3 +54,9 @@ class Jogador:
         for peca in self.lista_de_Pecas:
             pontos += peca.getladoSuperior().getValor() + peca.getladoInferior().getValor()
         return pontos
+    
+    def executaPrimeiraJogada(self):
+        pecaJogada = self.lista_de_Pecas[0]
+        self.lista_de_Pecas.remove(0)
+        self.passarVez()
+        return pecaJogada
