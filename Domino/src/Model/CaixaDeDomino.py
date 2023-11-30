@@ -7,15 +7,18 @@ class CaixaDeDomino:
     
     def __init__(self) -> None:
         self.geradorDePecas()
-        pass
+        print(self)
+        
     
     def geradorDePecas(self):
+        if(self.pecas != []):
+            return
         for i in range (0, 7):
             for j in range (i,7):
                 ladoSuperior = Lado(i)
                 ladoInferior = Lado(j)
                 self.pecas.append(Peca(ladoSuperior,ladoInferior))
-        pass
+        
     
     def getPecas(self) -> list[Peca]:
         return self.pecas
