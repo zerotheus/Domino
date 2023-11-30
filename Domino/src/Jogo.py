@@ -41,7 +41,9 @@ class Jogo:
         self.embaralhar()
         self.quantidadeDePecas()
         inicianteIndex=self.defineOrdemDeJogada()
-        self.participantes[inicianteIndex].executaPrimeiraJogada()
+        self.participantes[inicianteIndex].listarMinhasPecas()
+        self.pecaLivreLadoDireito = self.participantes[inicianteIndex].executaPrimeiraJogada()
+        self.pecaLivreLadoEsquerdo = self.pecaLivreLadoDireito
         self.participantes[inicianteIndex].listarMinhasPecas()
         pass
 
@@ -92,3 +94,9 @@ class Jogo:
     
     def aindaEhPossivelDeJogar(self):
         pass
+    
+    def alguemVenceu(self):
+        for particpante in self.participantes:
+            if(len(particpante.lista_de_Pecas) == 0):
+                return True
+        return False
