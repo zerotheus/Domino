@@ -1,6 +1,8 @@
 import pygame
 import os
 import random
+from Model.Lado import Lado
+from Model.Peca import Peca
 from Model.Tela import TELA_ALTURA, TELA_LARGURA, tela
 from Model.Peca import Peca
 from Model.Jogador import Jogador
@@ -22,8 +24,13 @@ class Jogo:
         pass
 
     def desenharTela(self):
+        lado1 = Lado(0)
+        lado2 = Lado(0)
+        
+        peca = Peca(lado1,lado2)
         cenarioRetangulo = pygame.Rect(0, 0, TELA_LARGURA, TELA_ALTURA)
         tela.blit(self.IMAGEM_DE_FUNDO,cenarioRetangulo)
+        peca.desenhar(tela)
         pygame.display.update()
 
     def addParticipante(self, participante):
