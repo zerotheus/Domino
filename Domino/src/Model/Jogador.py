@@ -1,4 +1,5 @@
 from Peca import Peca
+from Lado import Lado
 class Jogador:
     nome: None
     lista_de_Pecas:list[Peca] = []
@@ -10,6 +11,17 @@ class Jogador:
 
     def setPeca(self,peca):
         self.lista_de_Pecas.append(peca)
+        self.lista_de_Pecas.sort(key= lambda pecaDaLista: pecaDaLista.getladoSuperior().getValor() + pecaDaLista.getladoInferior().getValor(),reverse=True)
+
+    def setNome(self,nome:str):
+        self.nome = nome
+
+    def tenhoBuxa(self):
+        for peca in self.lista_de_Pecas:
+            if peca.ehUmaBuxa():
+                return peca
+        return None
+
 
     def jogarPeca(self,posicao):
         pecaJogada = self.lista_de_Pecas[posicao]
@@ -19,3 +31,14 @@ class Jogador:
     
     def passarVez(self):
         self.vez_de_jogar = False
+
+    def possoJogar(self,ladoLivreDaDireita:Lado,ladoLivreDaEsquerda:Lado):
+        for peca in self.lista_de_Pecas:
+            if(peca.meusLadosTemValorIgual(ladoLivreDaEsquerda) or peca.meusLadosTemValorIgual(ladoLivreDaDireita)):
+                return True
+        return False
+        
+    
+    def desenharMinhasPecas(self):
+        for peca in self.lista_de_Pecas:
+            peca.desenhar()
