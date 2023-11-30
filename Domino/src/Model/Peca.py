@@ -30,6 +30,9 @@ class Peca:
     def getConexaoInferior(self):
         print("conexao inferior")
         return self.ladoInferior.getConexao()
+    
+    def meusLadosTemValorIgual(self, ladoDireito:Lado,ladoEsquerdo:Lado):
+        return self.ladoSuperior.tenhoOMesmoValor(ladoEsquerdo) or self.ladoInferior.tenhoOMesmoValor(ladoDireito)
             
     def getladoSuperior(self) -> Lado:
         return self.ladoSuperior
