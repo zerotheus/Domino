@@ -1,10 +1,14 @@
 from Model.CaixaDeDomino import CaixaDeDomino
+from Jogo import Jogo
+from Model.Jogador import Jogador
 
 def test():
     caixa:CaixaDeDomino = CaixaDeDomino()
     pecas = caixa.getPecas()
     for peca in pecas:
-        peca.desenhar()
+        peca.desenharNoConsole()
+    
+    print("Pecas geradas", len(pecas))
         
     print("conectou?", pecas[0].conectar(pecas[1]))
     
@@ -36,7 +40,15 @@ def test():
     #peca 0/3 conecta?    
     print("peca 03 conecta?", pecas[0].conectar(pecas[3]))
 
-    
-    
+    jogo:Jogo = Jogo()
+    jogador:Jogador = jogo.getJogador()
+    jogador.listarMinhasPecas()
+    jogo.quantidadeDePecas()
+    jogo.embaralhar()
+    jogo.quantidadeDePecas()
+    jogador.listarMinhasPecas()
+    print(jogador.pontosAtuais())
+    print(jogador.tenhoBuxa())
+    jogo.defineOrdemDeJogada()
     
 test()
