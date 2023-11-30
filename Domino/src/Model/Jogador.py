@@ -1,5 +1,6 @@
-from Peca import Peca
-from Lado import Lado
+from Model.Peca import Peca
+from Model.Lado import Lado
+
 class Jogador:
     nome: None
     lista_de_Pecas:list[Peca] = []
@@ -22,7 +23,6 @@ class Jogador:
                 return peca
         return None
 
-
     def jogarPeca(self,posicao):
         pecaJogada = self.lista_de_Pecas[posicao]
         self.lista_de_Pecas.remove(posicao)
@@ -37,8 +37,12 @@ class Jogador:
             if(peca.meusLadosTemValorIgual(ladoLivreDaEsquerda) or peca.meusLadosTemValorIgual(ladoLivreDaDireita)):
                 return True
         return False
-        
     
     def desenharMinhasPecas(self):
         for peca in self.lista_de_Pecas:
             peca.desenhar()
+            
+    def listarMinhasPecas(self):
+        print("Minha quantidade de pecas e", len(self.lista_de_Pecas))
+        for peca in self.lista_de_Pecas:
+            peca.desenharNoConsole()
