@@ -24,6 +24,8 @@ class Lado:
        return self.valor
    
     def tenhoOMesmoValor(self,ladoDeOutraPeca:Lado):
+        if(ladoDeOutraPeca == None):
+            return False
         return self.valor == ladoDeOutraPeca.getValor()
    
     def getConexao(self) -> Lado:
