@@ -11,12 +11,12 @@ class Lado:
         self.peca = None
         pass
     
-    def conecta(self, lado:Lado) -> bool:
-        if(lado.conexao == None and  self.conexao == None and self.getValor() == lado.getValor()):
-            self.setConexao(lado)
-            lado.setConexao(self)
+    def conecta(self, ladoDaOutraPeca:Lado) -> bool:
+        if(ladoDaOutraPeca.conexao == None and  self.conexao == None and self.getValor() == ladoDaOutraPeca.getValor()):
+            self.setConexao(ladoDaOutraPeca)
+            ladoDaOutraPeca.setConexao(self)
             print(self.conexao)
-            print(lado.conexao)
+            print(ladoDaOutraPeca.conexao)
             return True
         return False
     
@@ -38,8 +38,8 @@ class Lado:
     def conexaoFazParteDaPeca(self):
        self.conexao.desenhar()
        
-    def setConexao(self,lado:Lado):
-        self.conexao = lado
+    def setConexao(self,ladoDaOutraPeca:Lado):
+        self.conexao = ladoDaOutraPeca
         
     def setPeca(self,peca):
         self.peca = peca
