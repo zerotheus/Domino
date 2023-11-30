@@ -35,6 +35,15 @@ class Jogo:
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
         self.buxaDeSena = self.pecasParaSortear[27]
         pass
+    
+    def iniciar(self):
+        self.quantidadeDePecas()
+        self.embaralhar()
+        self.quantidadeDePecas()
+        inicianteIndex=self.defineOrdemDeJogada()
+        self.participantes[inicianteIndex].executaPrimeiraJogada()
+        self.participantes[inicianteIndex].listarMinhasPecas()
+        pass
 
     def desenharTela(self):
         lado1 = Lado(0)
@@ -73,6 +82,7 @@ class Jogo:
     def defineOrdemDeJogada(self):
         index = self.pegajogadorComMaiorBuxa()
         print("Jogador", index , "tem a buxa de sena")
+        return index
 
     
     def pegajogadorComMaiorBuxa(self):
