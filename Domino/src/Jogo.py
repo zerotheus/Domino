@@ -16,14 +16,11 @@ class Jogo:
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
-        self.caixaDeDomino:CaixaDeDomino = None
         self.pecasJogadas:list[Peca] = []
         self.buxaDeSena:Peca = None 
         self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
         self.pecaLivreLadoDireito:Peca = None#pra cima direita
-        self.pecasParaSortear:list[Peca] = []
         self.participantes:list[Jogador] = []
-        self.jogador = None
         self.caixaDeDomino = CaixaDeDomino()
         print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
@@ -50,15 +47,10 @@ class Jogo:
         pass
 
     def desenharTela(self):
-        x = 0
-        y = 250
         cenarioRetangulo = pygame.Rect(0, 0, TELA_LARGURA, TELA_ALTURA)
         tela.blit(self.IMAGEM_DE_FUNDO,cenarioRetangulo)
-        for peca in self.pecasParaSortear:
-            x += 35
-            
-            peca.desenhar(tela,x,y)
-        
+        self.desenharPecasdoJogador(tela)
+        self.desenharPecasdoAdversario(tela)
         pygame.display.update()
 
     def addParticipante(self, participante):
@@ -127,3 +119,34 @@ class Jogo:
                     passaramAvez = 0
         print(self.alguemVenceu())
         print(i)
+        
+    def detectaColisao(self,colisao):
+        for peca in self.jogador.lista_de_Pecas:
+            peca.detectaColisao(colisao)
+            
+    def desenharPecasdoJogador(self,tela):
+        x = 475
+        y = 635
+        for peca in self.jogador.lista_de_Pecas:
+            x += 35 
+            peca.desenhar(tela,x,y)
+    
+    def desenharPecasdoAdversario(self,tela):
+        x = 40
+        y = 210
+        for i in range(1,4):
+            for peca in self.participantes[i].lista_de_Pecas:
+                if(i%2!=0):
+                    y+=35
+                else:
+                    x+=35
+                    y = 30       
+                peca.desenharPecasAdversarios(tela,x,y,i%2!=0)
+            if(i%2!=0):
+                x=475
+            else:
+                x+=475
+                y=210
+                
+        
+        

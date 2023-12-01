@@ -16,6 +16,7 @@ def start():
     relogio = pygame.time.Clock()
     
     rodando = True
+    jogo.iniciar()
     jogo.desenharTela()
 
     while rodando:
@@ -27,5 +28,8 @@ def start():
                 rodando = False
                 pygame.quit()
                 quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print("clicou")
+                jogo.detectaColisao(pygame.mouse.get_pos())
     
 start()
