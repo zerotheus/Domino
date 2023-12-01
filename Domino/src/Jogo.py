@@ -109,23 +109,19 @@ class Jogo:
     def autoPlay(self):
         i = 0
         passaramAvez = 0
-        try:
-            while(((not self.alguemVenceu()) and self.aindaEhPossivelDeJogar())):
-                for p in self.participantes:
-                    passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
-                    print("out",self.pecaLivreLadoDireito)
-                    print("out",self.pecaLivreLadoEsquerdo)
-                    i+=1
-                    print(i)
-                    if(passou):
-                        passaramAvez+=1
-                        if(passaramAvez == 4):
-                            return
-                    else:
-                        passaramAvez = 0
-        except Exception as e:
-            print(e)
-            print(self.pecaLivreLadoEsquerdo == self.pecaLivreLadoDireito)
-            print(self.pecaLivreLadoDireito.desenharNoConsole())
-            print("execao", i)
+        while(((not self.alguemVenceu()))):
+            for p in self.participantes:
+                passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
+                print("out",self.pecaLivreLadoDireito)
+                print("out",self.pecaLivreLadoEsquerdo)
+                i+=1
+                print(i)
+                if(passou):
+                    passaramAvez+=1
+                    if(passaramAvez == 4):
+                        print("todos passaram")
+                        return
+                else:
+                    passaramAvez = 0
+        print(self.alguemVenceu())
         print(i)
