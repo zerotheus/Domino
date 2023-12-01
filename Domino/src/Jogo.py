@@ -10,21 +10,20 @@ from Model.CaixaDeDomino import CaixaDeDomino
 
 class Jogo:
 
-    caixaDeDomino:CaixaDeDomino = None
-    pecasJogadas:list[Peca] = []
-    buxaDeSena:Peca = None 
-    pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
-    pecaLivreLadoDireito:Peca = None#pra cima direita
-    pecasParaSortear:list[Peca] = []
-    participantes = []
-    jogador = None
-
     IMAGEM_DE_FUNDO = pygame.image.load(os.path.join('Domino\pecasDomino','tela.png'))
 
     pygame.font.init()
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
+        self.caixaDeDomino:CaixaDeDomino = None
+        self.pecasJogadas:list[Peca] = []
+        self.buxaDeSena:Peca = None 
+        self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
+        self.pecaLivreLadoDireito:Peca = None#pra cima direita
+        self.pecasParaSortear:list[Peca] = []
+        self.participantes:list[Jogador] = []
+        self.jogador = None
         self.caixaDeDomino = CaixaDeDomino()
         print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
@@ -34,6 +33,7 @@ class Jogo:
         self.addParticipante(Jogador("PowerGuido"))     
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
         self.buxaDeSena = self.pecasParaSortear[27]
+        self.jogadorAtual = 0
         pass
     
     def iniciar(self):
@@ -41,9 +41,11 @@ class Jogo:
         self.embaralhar()
         self.quantidadeDePecas()
         inicianteIndex=self.defineOrdemDeJogada()
+        self.jogadorAtual = inicianteIndex
         self.participantes[inicianteIndex].listarMinhasPecas()
         self.pecaLivreLadoDireito = self.participantes[inicianteIndex].executaPrimeiraJogada()
         self.pecaLivreLadoEsquerdo = self.pecaLivreLadoDireito
+        self.pecasJogadas.append(self.buxaDeSena)
         self.participantes[inicianteIndex].listarMinhasPecas()
         pass
 
@@ -93,10 +95,37 @@ class Jogo:
                 return i
     
     def aindaEhPossivelDeJogar(self):
-        pass
+        for p in self.participantes:
+            if(p.possoJogar(self.pecaLivreLadoEsquerdo.meDeSeuLadoLivre(),self.pecaLivreLadoDireito.meDeSeuLadoLivre())):
+                return True
+        return False
     
     def alguemVenceu(self):
         for particpante in self.participantes:
             if(len(particpante.lista_de_Pecas) == 0):
                 return True
         return False
+    
+    def autoPlay(self):
+        i = 0
+        passaramAvez = 0
+        try:
+            while(((not self.alguemVenceu()) and self.aindaEhPossivelDeJogar())):
+                for p in self.participantes:
+                    passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
+                    print("out",self.pecaLivreLadoDireito)
+                    print("out",self.pecaLivreLadoEsquerdo)
+                    i+=1
+                    print(i)
+                    if(passou):
+                        passaramAvez+=1
+                        if(passaramAvez == 4):
+                            return
+                    else:
+                        passaramAvez = 0
+        except Exception as e:
+            print(e)
+            print(self.pecaLivreLadoEsquerdo == self.pecaLivreLadoDireito)
+            print(self.pecaLivreLadoDireito.desenharNoConsole())
+            print("execao", i)
+        print(i)
