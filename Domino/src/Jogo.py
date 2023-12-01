@@ -131,7 +131,7 @@ class Jogo:
         i = 0
         for peca in self.jogador.lista_de_Pecas:
             if peca.detectaColisao(colisao):
-                if self.jogador.possoJogarEssaPeca(peca):
+                if self.jogador.possoJogarEssaPeca(peca,self.pecaLivreLadoDireito,self.pecaLivreLadoEsquerdo):
                     self.pecasJogadas.append(peca) 
                     self.jogador.lista_de_Pecas.remove(peca)   
             i+=1
