@@ -16,12 +16,11 @@ class Jogo:
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
-        self.pecasJogadas:list[Peca] = []
-        self.buxaDeSena:Peca = None 
+        self.pecasJogadas:list[Peca] = [] 
         self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
         self.pecaLivreLadoDireito:Peca = None#pra cima direita
         self.participantes:list[Jogador] = []
-        self.caixaDeDomino = CaixaDeDomino()
+        self.caixaDeDomino:CaixaDeDomino = CaixaDeDomino()
         print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
         self.addParticipante(self.jogador)
@@ -29,7 +28,7 @@ class Jogo:
         self.addParticipante(Jogador("Shotaberta"))
         self.addParticipante(Jogador("PowerGuido"))     
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
-        self.buxaDeSena = self.pecasParaSortear[27]
+        self.buxaDeSena:Peca = self.pecasParaSortear[27]
         self.jogadorAtual:int = 0
         pass
     
@@ -44,6 +43,8 @@ class Jogo:
         self.pecaLivreLadoEsquerdo = self.pecaLivreLadoDireito
         self.pecasJogadas.append(self.buxaDeSena)
         self.participantes[inicianteIndex].listarMinhasPecas()
+        if(self.participantes[self.jogadorAtual] != self.jogador):
+            self.autoPlay()
         pass
 
     def desenharTela(self):
@@ -82,7 +83,6 @@ class Jogo:
         print("Jogador", index , "tem a buxa de sena")
         return index
 
-    
     def pegajogadorComMaiorBuxa(self):
         for i in range (0,4):
             if(self.participantes[i].tenhoBuxa() == self.buxaDeSena):
@@ -121,3 +121,6 @@ class Jogo:
         print(self.alguemVenceu())
         print()
         print(i)
+        
+    def adicionaNasJogadas(self,peca):
+        self.pecasJogadas.append(peca)

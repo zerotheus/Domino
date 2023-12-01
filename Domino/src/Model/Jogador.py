@@ -70,11 +70,13 @@ class Jogador:
                     if(peca.conectar(pecaLivreDaDireita)):
                         jogo.pecaLivreLadoDireito = self.jogarPeca(i) 
                         print("mudou?",pecaLivreDaDireita)
+                        jogo.adicionaNasJogadas(jogo.pecaLivreLadoDireito)
                         return False
                 if(peca.meusLadosTemValorIgual(pecaLivreDaEsquerda.meDeSeuLadoLivre(),pecaLivreDaEsquerda.meDeSeuLadoLivre())):
                     if(peca.conectar(pecaLivreDaEsquerda)):
                         jogo.pecaLivreDaEsquerda=self.jogarPeca(i)
                         print("mudou?",pecaLivreDaEsquerda)
+                        jogo.adicionaNasJogadas(jogo.pecaLivreDaEsquerda)
                         return False
                 i+=1
         print("i sai com", i)
