@@ -46,13 +46,15 @@ class Jogo:
         pass
 
     def desenharTela(self):
-        lado1 = Lado(0)
-        lado2 = Lado(0)
-        
-        peca = Peca(lado1,lado2)
+        x = 0
+        y = 250
         cenarioRetangulo = pygame.Rect(0, 0, TELA_LARGURA, TELA_ALTURA)
         tela.blit(self.IMAGEM_DE_FUNDO,cenarioRetangulo)
-        peca.desenhar(tela)
+        for peca in self.pecasParaSortear:
+            x += 35
+            
+            peca.desenhar(tela,x,y)
+        
         pygame.display.update()
 
     def addParticipante(self, participante):

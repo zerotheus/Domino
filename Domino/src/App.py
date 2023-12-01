@@ -14,9 +14,10 @@ TELA_ALTURA = 720
 def start():
     jogo = Jogo()
     relogio = pygame.time.Clock()
-
+    
     rodando = True
     jogo.desenharTela()
+
     while rodando:
         relogio.tick(30)
     
