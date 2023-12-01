@@ -79,6 +79,6 @@ class Peca:
         
     def desenharNoConsole(self):
         print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))
-        print( "Sou um buxa?", self.ehUmaBuxa())
+        #print( "Sou um buxa?", self.ehUmaBuxa())
     
     

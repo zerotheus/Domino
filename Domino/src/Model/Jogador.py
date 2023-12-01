@@ -25,28 +25,23 @@ class Jogador:
                 return peca
         return None
 
-    def jogadorJogue(self,posicao:int,pecaPraConectar:Peca):
-        pecaJogada= self.jogarPeca(posicao)
-        return pecaJogada
+    def jogadorJogue(self,posicao:int):
+        return self.jogarPeca(posicao)
+        
 
     def jogarPeca(self,posicao:int):
         pecaJogada = self.lista_de_Pecas[posicao]
         self.lista_de_Pecas.pop(posicao)
-        self.passarVez()
         return pecaJogada
-    
-    def passarVez(self):
-        self.vez_de_jogar = False
 
     def possoJogar(self,ladoLivreDaDireita:Lado,ladoLivreDaEsquerda:Lado):
-        print(ladoLivreDaDireita == None,ladoLivreDaEsquerda == None)
         for peca in self.lista_de_Pecas:
             if(peca.meusLadosTemValorIgual(ladoLivreDaEsquerda,ladoLivreDaDireita) or peca.meusLadosTemValorIgual(ladoLivreDaEsquerda,ladoLivreDaDireita)):
                 return True
         return False
     
-    def possoJogarEssaPeca(self,peca:Peca,pecaLivreDaDireito,ladoEsquerdo):
-        return peca.osLadosConectam(pecaLivreDaDireito) or peca.osLadosConectam(ladoEsquerdo)
+    def possoJogarEssaPeca(self,peca:Peca,ladoDireito,ladoEsquerdo):
+        return peca.osLadosConectam(ladoDireito) or peca.osLadosConectam(ladoEsquerdo)
             
     def listarMinhasPecas(self):
         print("Minha quantidade de pecas e", len(self.lista_de_Pecas))
@@ -62,7 +57,6 @@ class Jogador:
     def executaPrimeiraJogada(self):
         pecaJogada = self.lista_de_Pecas[0]
         self.lista_de_Pecas.pop(0)
-        self.passarVez()
         return pecaJogada
     
     def iaJogue(self, ladoEsquerdo:Lado,ladoDireito:Lado, jogo):
@@ -71,13 +65,15 @@ class Jogador:
             for peca in self.lista_de_Pecas:
                 if(peca.meusLadosTemValorIgual(ladoDireito,ladoEsquerdo)):
                     if(peca.conectar(ladoDireito)):
-                        jogo.pecaLivreLadoDireito = self.jogarPeca(i) 
-                        jogo.adicionaNasJogadas(jogo.pecaLivreLadoDireito)
+                        pecaJogada = self.jogarPeca(i)
+                        jogo.encaixeDireito = pecaJogada.meDeSeuLadoLivre() 
+                        jogo.adicionaNasJogadas(pecaJogada)
                         return False
                 if(peca.meusLadosTemValorIgual(ladoEsquerdo,ladoEsquerdo)):
                     if(peca.conectar(ladoEsquerdo)):
-                        jogo.ladoEsquerdo=self.jogarPeca(i)
-                        jogo.adicionaNasJogadas(jogo.ladoEsquerdo)
+                        pecaJogada = self.jogarPeca(i)
+                        jogo.encaixeEsquerdo = pecaJogada.meDeSeuLadoLivre()
+                        jogo.adicionaNasJogadas(pecaJogada)
                         return False
                 i+=1
         print("i sai com", i)

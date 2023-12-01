@@ -33,6 +33,6 @@ def start():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print("clicou")
                 jogo.detectaColisao(pygame.mouse.get_pos())
-                print(jogo.encaixeDireito,jogo.encaixeEsquerdo)
+                print(jogo.encaixeDireito.getValor(),jogo.encaixeEsquerdo.getValor())
     
 start()
