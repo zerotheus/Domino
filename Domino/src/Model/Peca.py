@@ -61,5 +61,4 @@ class Peca:
         tela.blit(self.imagem,retangulo.topleft)    
 
     def desenharNoConsole(self):
-        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))
-        print("Sou um buxa?", self.ehUmaBuxa())
+        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor(), "Sou um buxa?", self.ehUmaBuxa()))
