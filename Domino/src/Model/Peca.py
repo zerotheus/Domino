@@ -9,7 +9,7 @@ class Peca:
         self.ladoInferior = ladoInferior
         self.posicaoX:float = 200
         self.posicaoY:float = 500
-        self.imagens = None 
+        self.imagens = None   
         ladoSuperior.setPeca(self)
         ladoInferior.setPeca(self)
         pass
@@ -45,6 +45,12 @@ class Peca:
     
     def getladoInferior(self) -> Lado:
         return self.ladoInferior
+    
+    def meDeSeuLadoLivre(self):
+        if(self.getConexaoInferior() == None):
+            return self.ladoInferior
+        if(self.getConexaoSuperior() == None):
+            return self.ladoSuperior
             
     def desenhar(self,tela):
         self.desenharNoConsole()                                           #peca_(self.ladoSup.valor).(self.ladoInf.valor).png
@@ -52,7 +58,6 @@ class Peca:
         self.imagem = pygame.transform.scale(self.imagem,(50,50))
         pos_centro_imagem = self.imagem.get_rect(topleft=(self.posicaoX,self.posicaoY)).center
         retangulo = self.imagem.get_rect(center=pos_centro_imagem)
-        
         tela.blit(self.imagem,retangulo.topleft)    
 
     def desenharNoConsole(self):
