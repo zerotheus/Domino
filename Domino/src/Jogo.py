@@ -133,16 +133,20 @@ class Jogo:
                 if self.jogador.possoJogarEssaPeca(peca,self.encaixeDireito,self.encaixeEsquerdo):
                     if(self.conectaDosDoisLados(peca)):
                         print("Foram dois")
-                        self.jogador.jogadorJogue(i,self.encaixeDireito)
+                        self.jogador.jogadorJogue(i)
+                        #TODO por a escolha nesse caso
                     elif self.encaixeDireito.conecta(peca.ladoSuperior) or self.encaixeDireito.conecta(peca.ladoInferior):
-                        pecaJogada:Peca=self.jogador.jogadorJogue(i,self.encaixeDireito)
+                        pecaJogada:Peca=self.jogador.jogadorJogue(i)
                         print(pecaJogada.meDeSeuLadoLivre().getValor())
                         self.encaixeDireito=pecaJogada.meDeSeuLadoLivre()
                     elif self.encaixeEsquerdo.conecta(peca.ladoSuperior) or self.encaixeEsquerdo.conecta(peca.ladoInferior): 
-                        pecaJogada:Peca=self.jogador.jogadorJogue(i,self.encaixeEsquerdo)
+                        pecaJogada:Peca=self.jogador.jogadorJogue(i)
                         print(pecaJogada.meDeSeuLadoLivre().getValor())
                         self.encaixeEsquerdo = pecaJogada.meDeSeuLadoLivre()
-                    self.pecasJogadas.append(peca)    
+                    self.pecasJogadas.append(peca)
+                    self.jogadorAtual+=1
+                    self.iaJogue()
+                    return    
             i+=1
     
     def conectaDosDoisLados(self,peca:Peca):

@@ -41,7 +41,7 @@ class Jogador:
         return False
     
     def possoJogarEssaPeca(self,peca:Peca,ladoDireito,ladoEsquerdo):
-        return peca.osLadosConectam(ladoDireito) or peca.osLadosConectam(ladoEsquerdo)
+        return peca.verificaSeConecta(ladoDireito) or peca.verificaSeConecta(ladoEsquerdo)
             
     def listarMinhasPecas(self):
         print("Minha quantidade de pecas e", len(self.lista_de_Pecas))

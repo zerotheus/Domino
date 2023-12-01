@@ -16,6 +16,12 @@ class Lado:
             print(ladoDaOutraPeca.conexao,ladoDaOutraPeca.valor)
             return True
         return False
+
+    def verificaSemConexao(self, ladoDaOutraPeca:Lado) -> bool:
+        if(ladoDaOutraPeca.conexao == None and  self.conexao == None and self.getValor() == ladoDaOutraPeca.getValor()):
+            return True
+        return False
+
     
     def conectaComEstaPeca(self, ladoPraConectar) -> bool:
         return self.conecta(ladoPraConectar)

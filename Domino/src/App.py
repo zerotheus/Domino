@@ -34,5 +34,7 @@ def start():
                 print("clicou")
                 jogo.detectaColisao(pygame.mouse.get_pos())
                 print(jogo.encaixeDireito.getValor(),jogo.encaixeEsquerdo.getValor())
-    
+            if jogo.alguemVenceu():
+                return
+            
 start()
