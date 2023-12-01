@@ -33,6 +33,9 @@ class Jogo:
         self.encaixeEsquerdo = self.buxaDeSena.ladoInferior
         self.encaixeDireito = self.buxaDeSena.ladoSuperior
         self.botaoPassar = None
+        self.botaoEsquerdo = None
+        self.botaoDireito = None
+        self.conectarDosDoisLados = False
         pass
     
     def iniciar(self):
@@ -47,6 +50,7 @@ class Jogo:
         self.pecasJogadas.append(self.buxaDeSena)
         self.participantes[inicianteIndex].listarMinhasPecas()
         self.jogadorAtual += 1
+        self.conectarDosDoisLados = False
         if(self.participantes[self.jogadorAtual % 4] != self.jogador):
             self.iaJogue()
         pass
@@ -57,6 +61,8 @@ class Jogo:
         self.botaoPassarVez()
         self.desenharPecasdoJogador(tela)
         self.desenharPecasdoAdversario(tela)
+        self.botaoJogarnaDireita()
+        self.botaoJogarnaEsquerda()
         self.desenharPecaJogada(tela)
         pygame.display.update()
 
@@ -151,6 +157,8 @@ class Jogo:
             if peca.detectaColisao(colisao):
                 if self.jogador.possoJogarEssaPeca(peca,self.encaixeDireito,self.encaixeEsquerdo):
                     if(self.conectaDosDoisLados(peca)):
+                        self.conectarDosDoisLados = True
+                        
                         print("Foram dois")
                         self.jogador.jogadorJogue(i)
                         #TODO por a escolha nesse caso
@@ -235,3 +243,17 @@ class Jogo:
         pos_centro_imagem = self.imagem.get_rect(topleft=(900,650)).center   
         self.botaoPassar = self.imagem.get_rect(center=pos_centro_imagem)
         tela.blit(self.imagem,self.botaoPassar.topleft)   
+    
+    def botaoJogarnaEsquerda(self):
+        self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','jogarEsquerda.png')).convert_alpha()
+        self.imagem = pygame.transform.scale(self.imagem,(30,30))  
+        pos_centro_imagem = self.imagem.get_rect(topleft=(400,650)).center   
+        self.botaoEsquerdo = self.imagem.get_rect(center=pos_centro_imagem)
+        tela.blit(self.imagem,self.botaoEsquerdo.topleft) 
+        
+    def botaoJogarnaDireita(self):
+        self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','jogarDireita.png')).convert_alpha()
+        self.imagem = pygame.transform.scale(self.imagem,(30,30))  
+        pos_centro_imagem = self.imagem.get_rect(topleft=(450,650)).center   
+        self.botaoDireito = self.imagem.get_rect(center=pos_centro_imagem)
+        tela.blit(self.imagem,self.botaoDireito.topleft) 
