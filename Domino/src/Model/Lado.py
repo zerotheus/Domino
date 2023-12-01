@@ -12,13 +12,13 @@ class Lado:
         if(ladoDaOutraPeca.conexao == None and  self.conexao == None and self.getValor() == ladoDaOutraPeca.getValor()):
             self.setConexao(ladoDaOutraPeca)
             ladoDaOutraPeca.setConexao(self)
-            print(self.conexao)
-            print(ladoDaOutraPeca.conexao)
+            print(self.conexao, self.valor)
+            print(ladoDaOutraPeca.conexao,ladoDaOutraPeca.valor)
             return True
         return False
     
-    def conectaComEstaPeca(self, peca) -> bool:
-        return self.conecta(peca.getladoSuperior()) or self.conecta(peca.getladoInferior())
+    def conectaComEstaPeca(self, ladoPraConectar) -> bool:
+        return self.conecta(ladoPraConectar)
         
     def getValor(self):
        return self.valor

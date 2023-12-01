@@ -1,6 +1,6 @@
 import pygame
 import os
-import random
+import random, time
 from Jogo import Jogo
 #from Settings.Configuration import pygame, clock, SCREEN_UPDATE
 
@@ -16,6 +16,8 @@ def start():
     relogio = pygame.time.Clock()
     
     rodando = True
+    jogo.desenharTela()
+    time.sleep(2)
     jogo.iniciar()
     
 
@@ -31,5 +33,6 @@ def start():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print("clicou")
                 jogo.detectaColisao(pygame.mouse.get_pos())
+                print(jogo.encaixeDireito,jogo.encaixeEsquerdo)
     
 start()

@@ -1,6 +1,6 @@
 import pygame
 import os
-import random
+import random, time
 from Model.Lado import Lado
 from Model.Peca import Peca
 from Model.Tela import TELA_ALTURA, TELA_LARGURA, tela
@@ -17,8 +17,6 @@ class Jogo:
 
     def __init__(self) -> None:
         self.pecasJogadas:list[Peca] = [] 
-        self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
-        self.pecaLivreLadoDireito:Peca = None#pra cima direita
         self.participantes:list[Jogador] = []
         self.caixaDeDomino:CaixaDeDomino = CaixaDeDomino()
         print(self.caixaDeDomino)
@@ -28,7 +26,9 @@ class Jogo:
         self.addParticipante(Jogador("Shotaberta"))
         self.addParticipante(Jogador("PowerGuido"))     
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
-        self.buxaDeSena:Peca = self.pecasParaSortear[27]
+        self.buxaDeSena:Lado = self.pecasParaSortear[27]
+        self.encaixeDireito:Lado=self.buxaDeSena.ladoSuperior
+        self.encaixeEsquerdo:Lado = self.buxaDeSena.ladoInferior
         self.jogadorAtual:int = 0
         pass
     
@@ -37,15 +37,15 @@ class Jogo:
         self.embaralhar()
         self.quantidadeDePecas()
         inicianteIndex=self.defineOrdemDeJogada()
+        self.desenharTela()
         self.jogadorAtual = inicianteIndex
-        self.participantes[inicianteIndex].listarMinhasPecas()
-        self.pecaLivreLadoDireito = self.participantes[inicianteIndex].executaPrimeiraJogada()
-        self.pecaLivreLadoEsquerdo = self.pecaLivreLadoDireito
+        #self.participantes[inicianteIndex].listarMinhasPecas()
+        self.pecaJogada = self.participantes[inicianteIndex].executaPrimeiraJogada()
         self.pecasJogadas.append(self.buxaDeSena)
-        self.participantes[inicianteIndex].listarMinhasPecas()
+        #self.participantes[inicianteIndex].listarMinhasPecas()
         self.jogadorAtual += 1
         if(self.participantes[self.jogadorAtual % 4] != self.jogador):
-            self.autoPlay()
+            self.iaJogue()
         pass
 
     def desenharTela(self):
@@ -92,7 +92,7 @@ class Jogo:
     
     def aindaEhPossivelDeJogar(self):
         for p in self.participantes:
-            if(p.possoJogar(self.pecaLivreLadoEsquerdo.meDeSeuLadoLivre(),self.pecaLivreLadoDireito.meDeSeuLadoLivre())):
+            if(p.possoJogar(self.encaixeEsquerdo.meDeSeuLadoLivre(),self.encaixeDireito.meDeSeuLadoLivre())):
                 return True
         return False
     
@@ -102,14 +102,17 @@ class Jogo:
                 return True
         return False
     
-    def autoPlay(self):
+    def iaJogue(self):
         i = 0
         passaramAvez = 0
         while((not self.alguemVenceu()) and self.participantes[self.jogadorAtual %4] != self.jogador):
             p = self.participantes[self.jogadorAtual %4]
-            passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
-            print("out",self.pecaLivreLadoDireito)
-            print("out",self.pecaLivreLadoEsquerdo)
+            time.sleep(1)
+            print(self.jogadorAtual % 4)
+            passou=p.iaJogue(self.encaixeEsquerdo,self.encaixeDireito,self)
+            print("out",self.encaixeDireito)
+            print("out",self.encaixeEsquerdo)
+            self.desenharTela()
             self.jogadorAtual+=1
             i+=1
             print(i)
@@ -129,14 +132,31 @@ class Jogo:
         
     def detectaColisao(self,colisao):
         i = 0
+        print(self.encaixeDireito == self.encaixeEsquerdo)
         for peca in self.jogador.lista_de_Pecas:
             if peca.detectaColisao(colisao):
-                if self.jogador.possoJogarEssaPeca(peca,self.pecaLivreLadoDireito,self.pecaLivreLadoEsquerdo):
-                    self.pecasJogadas.append(peca) 
-                    self.jogador.lista_de_Pecas.remove(peca)   
+                if self.jogador.possoJogarEssaPeca(peca,self.encaixeDireito,self.encaixeEsquerdo):
+                    if(not self.conectaDosDoisLados(peca)):
+                        self.jogador.jogadorJogue(i,self.encaixeDireito)
+                    elif self.encaixeDireito.conectar(peca):
+                        self.encaixeDireito=self.jogador.jogadorJogue(i,self.encaixeDireito,self)
+                    else: 
+                        self.encaixeEsquerdo.conectar(peca)
+                        self.encaixeEsquerdo=self.jogador.jogadorJogue(i,self.encaixeDireito,self)
+                    self.pecasJogadas.append(peca)    
             i+=1
+    
+    def conectaDosDoisLados(self,peca:Peca):
+        print("peca?", peca == None)
+        print("dir?", self.encaixeDireito == None)
+        print("esq?", self.encaixeEsquerdo == None)
+        print(self.encaixeEsquerdo == self.encaixeDireito)
         
-            
+        if(peca.ladoSuperior.getValor() == self.encaixeDireito.meDeSeuLadoLivre().getValor()
+           and peca.ladoInferior.getValor() == self.encaixeEsquerdo.meDeSeuLadoLivre().getValor()):
+            return True    
+        return False    
+        
     def desenharPecasdoJogador(self,tela):
         x = 475
         y = 635
