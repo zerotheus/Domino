@@ -51,6 +51,7 @@ class Jogo:
         tela.blit(self.IMAGEM_DE_FUNDO,cenarioRetangulo)
         self.desenharPecasdoJogador(tela)
         self.desenharPecasdoAdversario(tela)
+        self.desenharPecaJogada(tela)
         pygame.display.update()
 
     def addParticipante(self, participante):
@@ -148,5 +149,11 @@ class Jogo:
                 x+=475
                 y=210
                 
+    def desenharPecaJogada(self,tela):
+        x= 610
+        y= 300
         
+        for peca in self.pecasJogadas:
+            peca.desenhar(tela,x,y)
+         
         

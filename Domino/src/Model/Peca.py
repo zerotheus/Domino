@@ -67,7 +67,7 @@ class Peca:
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','branca.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(50,55))  
         if rotacao:
-            self.imagem = pygame.transform.rotate(self.imagem,90)     
+            self.imagem = pygame.transform.rotate(self.imagem,-90)   
         pos_centro_imagem = self.imagem.get_rect(topleft=(x,y)).center
         self.retangulo = self.imagem.get_rect(center=pos_centro_imagem)
         tela.blit(self.imagem,self.retangulo.topleft)   
