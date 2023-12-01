@@ -16,10 +16,11 @@ class Jogo:
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
-        self.pecasJogadas:list[Peca] = [] 
+        self.pecasJogadas:list[Peca] = []
+        self.pecasNaEsq:list[Peca] = [] 
+        self.pecasNaDir:list[Peca] = [] 
         self.participantes:list[Jogador] = []
         self.caixaDeDomino:CaixaDeDomino = CaixaDeDomino()
-        print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
         self.addParticipante(self.jogador)
         self.addParticipante(Jogador("Yasmin Yaz Bollaz"))
@@ -90,8 +91,8 @@ class Jogo:
     
     def aindaEhPossivelDeJogar(self):
         for p in self.participantes:
-            if(p.possoJogar(self.encaixeEsquerdo.meDeSeuLadoLivre(),self.encaixeDireito.meDeSeuLadoLivre())):
-                return True
+            if(p.possoJogar(self.encaixeEsquerdo,self.encaixeDireito)):
+                return True    
         return False
     
     def alguemVenceu(self):
@@ -139,11 +140,13 @@ class Jogo:
                         pecaJogada:Peca=self.jogador.jogadorJogue(i)
                         print(pecaJogada.meDeSeuLadoLivre().getValor())
                         self.encaixeDireito=pecaJogada.meDeSeuLadoLivre()
+                        self.pecasNaDir.append(pecaJogada) 
                     elif self.encaixeEsquerdo.conecta(peca.ladoSuperior) or self.encaixeEsquerdo.conecta(peca.ladoInferior): 
                         pecaJogada:Peca=self.jogador.jogadorJogue(i)
                         print(pecaJogada.meDeSeuLadoLivre().getValor())
                         self.encaixeEsquerdo = pecaJogada.meDeSeuLadoLivre()
-                    self.pecasJogadas.append(peca)
+                        self.pecasNaEsq.append(pecaJogada) 
+                    #self.pecasJogadas.append(peca)
                     self.jogadorAtual+=1
                     self.iaJogue()
                     return    
@@ -184,5 +187,8 @@ class Jogo:
         y= 300   
         for peca in self.pecasJogadas:
             peca.desenhar(tela,x,y)
-         
+        for peca in self.pecasNaEsq:
+            peca.desenhar(tela,400,200)
+        for peca in self.pecasNaDir:
+            peca.desenhar(tela,800,400)
         

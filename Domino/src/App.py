@@ -35,6 +35,9 @@ def start():
                 jogo.detectaColisao(pygame.mouse.get_pos())
                 print(jogo.encaixeDireito.getValor(),jogo.encaixeEsquerdo.getValor())
             if jogo.alguemVenceu():
-                return
+                print("Alguem venceu")
+                #return
+            if not jogo.aindaEhPossivelDeJogar():
+                print("Nao é mais possivel jogar desempatar")
             
 start()

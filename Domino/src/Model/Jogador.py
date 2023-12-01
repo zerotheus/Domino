@@ -36,7 +36,7 @@ class Jogador:
 
     def possoJogar(self,ladoLivreDaDireita:Lado,ladoLivreDaEsquerda:Lado):
         for peca in self.lista_de_Pecas:
-            if(peca.meusLadosTemValorIgual(ladoLivreDaEsquerda,ladoLivreDaDireita) or peca.meusLadosTemValorIgual(ladoLivreDaEsquerda,ladoLivreDaDireita)):
+            if(peca.meusLadosTemValorIgual(ladoLivreDaEsquerda,ladoLivreDaDireita)):
                 return True
         return False
     
@@ -67,13 +67,15 @@ class Jogador:
                     if(peca.conectar(ladoDireito)):
                         pecaJogada = self.jogarPeca(i)
                         jogo.encaixeDireito = pecaJogada.meDeSeuLadoLivre() 
-                        jogo.adicionaNasJogadas(pecaJogada)
+                        #jogo.adicionaNasJogadas(pecaJogada)
+                        jogo.pecasNaDir.append(pecaJogada) 
                         return False
                 if(peca.meusLadosTemValorIgual(ladoEsquerdo,ladoEsquerdo)):
                     if(peca.conectar(ladoEsquerdo)):
                         pecaJogada = self.jogarPeca(i)
                         jogo.encaixeEsquerdo = pecaJogada.meDeSeuLadoLivre()
-                        jogo.adicionaNasJogadas(pecaJogada)
+                        #jogo.adicionaNasJogadas(pecaJogada)
+                        jogo.pecasNaEsq.append(pecaJogada) 
                         return False
                 i+=1
         print("i sai com", i)
