@@ -175,7 +175,7 @@ class Jogo:
         y = 635
         for peca in self.jogador.lista_de_Pecas:
             x += 35 
-            peca.desenhar(tela,x,y)
+            peca.desenhar(tela,x,y,False)
     
     def desenharPecasdoAdversario(self,tela):
         x = 40
@@ -198,15 +198,30 @@ class Jogo:
                 y=210
                 
     def desenharPecaJogada(self,tela):
+        posEsquerda = 567
+        posDireita = 653
         x= 610
         y= 300   
         for peca in self.pecasJogadas:
-            peca.desenhar(tela,x,y)
+            peca.desenhar(tela,x,y,False)
         for peca in self.pecasNaEsq:
-            peca.desenhar(tela,400,200)
+            if not peca.ehUmaBuxa():
+                peca.desenhar(tela,posEsquerda,300,True and not peca.ehUmaBuxa()) 
+                posEsquerda -= 57
+            else:
+                posEsquerda += 15
+                peca.desenhar(tela,posEsquerda,300,True and not peca.ehUmaBuxa()) 
+                posEsquerda -= 42
         for peca in self.pecasNaDir:
-            peca.desenhar(tela,800,400)
-    
+            if not peca.ehUmaBuxa():
+                peca.desenhar(tela,posDireita,300,True and not peca.ehUmaBuxa()) 
+                posDireita += 57
+            else:
+                posDireita -= 15
+                
+                peca.desenhar(tela,posDireita,300,True and not peca.ehUmaBuxa())
+                posDireita += 42
+                
     def botaoPassarVez(self):
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','passarVez.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(60,30))  

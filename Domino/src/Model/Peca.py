@@ -57,11 +57,13 @@ class Peca:
             return self.ladoSuperior
     
     
-    def desenhar(self,tela,x,y):
+    def desenhar(self,tela,x,y,rotacao):
        # self.desenharNoConsole()                                         
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','peca_' + str(self.ladoSuperior.valor) + '.' + str(self.ladoInferior.valor) + '.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(50,55))
         pos_centro_imagem = self.imagem.get_rect(topleft=(x,y)).center 
+        if rotacao:
+            self.imagem = pygame.transform.rotate(self.imagem,90)
         self.retangulo = self.imagem.get_rect(center=pos_centro_imagem)
         tela.blit(self.imagem,self.retangulo.topleft)    
     
