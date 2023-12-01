@@ -9,7 +9,7 @@ class Peca:
         self.ladoInferior = ladoInferior
         self.posicaoX:float = 200
         self.posicaoY:float = 500
-        self.imagens = None 
+        self.imagens = None   
         ladoSuperior.setPeca(self)
         ladoInferior.setPeca(self)
         pass
@@ -45,6 +45,12 @@ class Peca:
     
     def getladoInferior(self) -> Lado:
         return self.ladoInferior
+    
+    def meDeSeuLadoLivre(self):
+        if(self.getConexaoInferior() == None):
+            return self.ladoInferior
+        if(self.getConexaoSuperior() == None):
+            return self.ladoSuperior
             
     def desenhar(self,tela,x,y):
         self.desenharNoConsole()                                         
@@ -56,5 +62,4 @@ class Peca:
         
 
     def desenharNoConsole(self):
-        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))
-        print("Sou um buxa?", self.ehUmaBuxa())
+        print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor(), "Sou um buxa?", self.ehUmaBuxa()))
