@@ -1,3 +1,4 @@
+import time
 import pygame
 import os
 import random
@@ -29,6 +30,9 @@ class Jogo:
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
         self.buxaDeSena:Peca = self.pecasParaSortear[27]
         self.jogadorAtual:int = 0
+        self.encaixeEsquerdo = self.buxaDeSena.ladoInferior
+        self.encaixeDireito = self.buxaDeSena.ladoSuperior
+        self.botaoPassar = None
         pass
     
     def iniciar(self):
@@ -44,12 +48,13 @@ class Jogo:
         self.participantes[inicianteIndex].listarMinhasPecas()
         self.jogadorAtual += 1
         if(self.participantes[self.jogadorAtual % 4] != self.jogador):
-            self.autoPlay()
+            self.iaJogue()
         pass
 
     def desenharTela(self):
         cenarioRetangulo = pygame.Rect(0, 0, TELA_LARGURA, TELA_ALTURA)
         tela.blit(self.IMAGEM_DE_FUNDO,cenarioRetangulo)
+        self.botaoPassarVez()
         self.desenharPecasdoJogador(tela)
         self.desenharPecasdoAdversario(tela)
         self.desenharPecaJogada(tela)
@@ -101,32 +106,39 @@ class Jogo:
                 return True
         return False
     
-    def autoPlay(self):
+    def iaJogue(self):
         i = 0
         passaramAvez = 0
+        self.desenharTela()
         while((not self.alguemVenceu()) and self.participantes[self.jogadorAtual %4] != self.jogador):
             p = self.participantes[self.jogadorAtual %4]
-            passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
-            print("out",self.pecaLivreLadoDireito)
-            print("out",self.pecaLivreLadoEsquerdo)
+            time.sleep(1)
+            print(self.jogadorAtual % 4)
+            passou=p.iaJogue(self.encaixeEsquerdo,self.encaixeDireito,self)
+            self.desenharTela()
             self.jogadorAtual+=1
             i+=1
             print(i)
             if(passou):
                 passaramAvez+=1
-                if(passaramAvez == 4):
-                    print("todos passaram")
+                if(passaramAvez == 3):
                     return
             else:
                 passaramAvez = 0
         print(self.alguemVenceu())
-        print()
         print(i)
         
     def adicionaNasJogadas(self,peca):
         self.pecasJogadas.append(peca)
         
     def detectaColisao(self,colisao):
+        if self.botaoPassar.collidepoint(colisao):
+            print("entrei no if")
+            if not self.jogador.possoJogar(self.encaixeDireito,self.encaixeEsquerdo):
+                self.jogadorAtual +=1
+                self.iaJogue()
+            else:
+                print("voce pode jgr")
         i = 0
         for peca in self.jogador.lista_de_Pecas:
             if peca.detectaColisao(colisao):
@@ -150,7 +162,8 @@ class Jogo:
                     self.iaJogue()
                     return    
             i+=1
-    
+        
+                
     def conectaDosDoisLados(self,peca:Peca):
         if(peca.ladoSuperior.getValor() == self.encaixeDireito.getValor()
            and peca.ladoInferior.getValor() == self.encaixeEsquerdo.getValor()):
@@ -173,8 +186,11 @@ class Jogo:
                     y+=35
                 else:
                     x+=35
-                    y = 30       
-                peca.desenharPecasAdversarios(tela,x,y,i%2!=0)
+                    y = 30   
+                if i != 3:    
+                    peca.desenharPecasAdversarios(tela,x,y,i%2!=0)
+                else:
+                    peca.desenharPecasAdversarios(tela,1200,y,i%2!=0)
             if(i%2!=0):
                 x=475
             else:
@@ -190,4 +206,10 @@ class Jogo:
             peca.desenhar(tela,400,200)
         for peca in self.pecasNaDir:
             peca.desenhar(tela,800,400)
-        
+    
+    def botaoPassarVez(self):
+        self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','passarVez.png')).convert_alpha()
+        self.imagem = pygame.transform.scale(self.imagem,(60,30))  
+        pos_centro_imagem = self.imagem.get_rect(topleft=(900,650)).center   
+        self.botaoPassar = self.imagem.get_rect(center=pos_centro_imagem)
+        tela.blit(self.imagem,self.botaoPassar.topleft)   

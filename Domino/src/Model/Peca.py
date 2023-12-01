@@ -42,7 +42,7 @@ class Peca:
         return self.ladoInferior.getConexao()
     
     def meusLadosTemValorIgual(self, ladoDireito:Lado,ladoEsquerdo:Lado):
-        return self.ladoSuperior.tenhoOMesmoValor(ladoEsquerdo) or self.ladoInferior.tenhoOMesmoValor(ladoDireito)
+        return self.ladoSuperior.tenhoOMesmoValor(ladoEsquerdo) or self.ladoInferior.tenhoOMesmoValor(ladoDireito) or self.ladoSuperior.tenhoOMesmoValor(ladoDireito) or self.ladoInferior.tenhoOMesmoValor(ladoEsquerdo)
             
     def getladoSuperior(self) -> Lado:
         return self.ladoSuperior
@@ -69,9 +69,10 @@ class Peca:
         #self.desenharNoConsole()                                         
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','branca.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(50,55))  
-        if rotacao:
-            self.imagem = pygame.transform.rotate(self.imagem,-90)   
         pos_centro_imagem = self.imagem.get_rect(topleft=(x,y)).center
+        if rotacao:
+            self.imagem = pygame.transform.rotate(self.imagem,90)   
+       
         self.retangulo = self.imagem.get_rect(center=pos_centro_imagem)
         tela.blit(self.imagem,self.retangulo.topleft)   
         
