@@ -39,5 +39,6 @@ def start():
                 #return
             if not jogo.aindaEhPossivelDeJogar():
                 print("Nao é mais possivel jogar desempatar")
+                print("o jogador", jogo.desEmpate())
             
 start()

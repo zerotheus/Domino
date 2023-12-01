@@ -100,6 +100,13 @@ class Jogo:
                 return True    
         return False
     
+    def desEmpate(self):
+        participanteComMenosPontos = self.jogador
+        for p in self.participantes:
+            if(p.pontosAtuais()<participanteComMenosPontos.pontosAtuais()):
+                participanteComMenosPontos = p
+        return participanteComMenosPontos.nome
+    
     def alguemVenceu(self):
         for particpante in self.participantes:
             if(len(particpante.lista_de_Pecas) == 0):
@@ -162,7 +169,7 @@ class Jogo:
                     self.iaJogue()
                     return    
             i+=1
-        
+      
                 
     def conectaDosDoisLados(self,peca:Peca):
         if(peca.ladoSuperior.getValor() == self.encaixeDireito.getValor()
