@@ -16,12 +16,11 @@ class Jogo:
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
-        self.pecasJogadas:list[Peca] = []
-        self.buxaDeSena:Peca = None 
+        self.pecasJogadas:list[Peca] = [] 
         self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
         self.pecaLivreLadoDireito:Peca = None#pra cima direita
         self.participantes:list[Jogador] = []
-        self.caixaDeDomino = CaixaDeDomino()
+        self.caixaDeDomino:CaixaDeDomino = CaixaDeDomino()
         print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
         self.addParticipante(self.jogador)
@@ -29,8 +28,8 @@ class Jogo:
         self.addParticipante(Jogador("Shotaberta"))
         self.addParticipante(Jogador("PowerGuido"))     
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
-        self.buxaDeSena = self.pecasParaSortear[27]
-        self.jogadorAtual = 0
+        self.buxaDeSena:Peca = self.pecasParaSortear[27]
+        self.jogadorAtual:int = 0
         pass
     
     def iniciar(self):
@@ -44,6 +43,8 @@ class Jogo:
         self.pecaLivreLadoEsquerdo = self.pecaLivreLadoDireito
         self.pecasJogadas.append(self.buxaDeSena)
         self.participantes[inicianteIndex].listarMinhasPecas()
+        if(self.participantes[self.jogadorAtual] != self.jogador):
+            self.autoPlay()
         pass
 
     def desenharTela(self):
@@ -83,7 +84,6 @@ class Jogo:
         print("Jogador", index , "tem a buxa de sena")
         return index
 
-    
     def pegajogadorComMaiorBuxa(self):
         for i in range (0,4):
             if(self.participantes[i].tenhoBuxa() == self.buxaDeSena):
@@ -104,23 +104,27 @@ class Jogo:
     def autoPlay(self):
         i = 0
         passaramAvez = 0
-        while(((not self.alguemVenceu()))):
-            for p in self.participantes:
-                passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
-                print("out",self.pecaLivreLadoDireito)
-                print("out",self.pecaLivreLadoEsquerdo)
-                i+=1
-                print(i)
-                if(passou):
-                    passaramAvez+=1
-                    if(passaramAvez == 4):
-                        print("todos passaram")
-                        return
-                else:
-                    passaramAvez = 0
+        while((not self.alguemVenceu()) and self.participantes[self.jogadorAtual %4] != self.jogador):
+            p = self.participantes[self.jogadorAtual %4]
+            passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
+            print("out",self.pecaLivreLadoDireito)
+            print("out",self.pecaLivreLadoEsquerdo)
+            self.jogadorAtual+=1
+            i+=1
+            print(i)
+            if(passou):
+                passaramAvez+=1
+                if(passaramAvez == 4):
+                    print("todos passaram")
+                    return
+            else:
+                passaramAvez = 0
         print(self.alguemVenceu())
+        print()
         print(i)
         
+    def adicionaNasJogadas(self,peca):
+        self.pecasJogadas.append(peca)
     def detectaColisao(self,colisao):
         for peca in self.jogador.lista_de_Pecas:
             peca.detectaColisao(colisao)

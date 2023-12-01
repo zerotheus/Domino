@@ -43,12 +43,14 @@ def test():
     jogo:Jogo = Jogo()
     jogador:Jogador = jogo.getJogador()
     jogador.listarMinhasPecas()
-    jogo.quantidadeDePecas()
-    jogo.embaralhar()
-    jogo.quantidadeDePecas()
+    jogo.iniciar()
     jogador.listarMinhasPecas()
     print(jogador.pontosAtuais())
     print(jogador.tenhoBuxa())
-    jogo.defineOrdemDeJogada()
+    print(jogo.pecaLivreLadoEsquerdo == jogo.pecaLivreLadoDireito)
+    jogo.autoPlay()
+    print(jogo.pecaLivreLadoEsquerdo == jogo.pecaLivreLadoDireito)
+    
+    
     
 test()
