@@ -22,11 +22,11 @@ class Jogo:
         self.pecasNaDir:list[Peca] = [] 
         self.participantes:list[Jogador] = []
         self.caixaDeDomino:CaixaDeDomino = CaixaDeDomino()
-        self.jogador = Jogador("Sofia dahPuta")
+        self.jogador = Jogador("Sofia")
         self.addParticipante(self.jogador)
-        self.addParticipante(Jogador("Yasmin Yaz Bollaz"))
-        self.addParticipante(Jogador("Shotaberta"))
-        self.addParticipante(Jogador("PowerGuido"))     
+        self.addParticipante(Jogador("Yasmin"))
+        self.addParticipante(Jogador("Roberta"))
+        self.addParticipante(Jogador("Paulo"))     
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
         self.buxaDeSena:Peca = self.pecasParaSortear[27]
         self.jogadorAtual:int = 0
@@ -157,9 +157,9 @@ class Jogo:
             if peca.detectaColisao(colisao):
                 if self.jogador.possoJogarEssaPeca(peca,self.encaixeDireito,self.encaixeEsquerdo):
                     if(self.conectaDosDoisLados(peca)):
-                        self.conectarDosDoisLados = True
-                        
+                        self.conectarDosDoisLados = True                
                         print("Foram dois")
+                        return self.jogador.lista_de_Pecas[i]
                         self.jogador.jogadorJogue(i)
                         #TODO por a escolha nesse caso
                     elif self.encaixeDireito.conecta(peca.ladoSuperior) or self.encaixeDireito.conecta(peca.ladoInferior):
@@ -175,8 +175,9 @@ class Jogo:
                     #self.pecasJogadas.append(peca)
                     self.jogadorAtual+=1
                     self.iaJogue()
-                    return    
+                    return None    
             i+=1
+        return None
       
                 
     def conectaDosDoisLados(self,peca:Peca):
