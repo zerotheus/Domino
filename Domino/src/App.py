@@ -17,11 +17,11 @@ def start():
     
     rodando = True
     jogo.iniciar()
-    jogo.desenharTela()
+    
 
     while rodando:
         relogio.tick(30)
-    
+        jogo.desenharTela()
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT:

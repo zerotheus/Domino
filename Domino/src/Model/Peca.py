@@ -55,7 +55,7 @@ class Peca:
     
     
     def desenhar(self,tela,x,y):
-        self.desenharNoConsole()                                         
+       # self.desenharNoConsole()                                         
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','peca_' + str(self.ladoSuperior.valor) + '.' + str(self.ladoInferior.valor) + '.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(50,55))
         pos_centro_imagem = self.imagem.get_rect(topleft=(x,y)).center 
@@ -63,7 +63,7 @@ class Peca:
         tela.blit(self.imagem,self.retangulo.topleft)    
     
     def desenharPecasAdversarios(self,tela,x,y,rotacao):
-        self.desenharNoConsole()                                         
+        #self.desenharNoConsole()                                         
         self.imagem =  pygame.image.load(os.path.join('Domino\pecasDomino','branca.png')).convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem,(50,55))  
         if rotacao:
@@ -75,6 +75,7 @@ class Peca:
     def detectaColisao(self,colisao):
         if self.retangulo.collidepoint(colisao):
             print (self.desenharNoConsole())
+            return self.retangulo.collidepoint(colisao)
         
     def desenharNoConsole(self):
         print("Oi sou a peça\n" + str(self.ladoSuperior.getValor()) + "\n/" + str(self.ladoInferior.getValor()))

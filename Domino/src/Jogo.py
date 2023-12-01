@@ -43,7 +43,8 @@ class Jogo:
         self.pecaLivreLadoEsquerdo = self.pecaLivreLadoDireito
         self.pecasJogadas.append(self.buxaDeSena)
         self.participantes[inicianteIndex].listarMinhasPecas()
-        if(self.participantes[self.jogadorAtual] != self.jogador):
+        self.jogadorAtual += 1
+        if(self.participantes[self.jogadorAtual % 4] != self.jogador):
             self.autoPlay()
         pass
 
@@ -125,9 +126,16 @@ class Jogo:
         
     def adicionaNasJogadas(self,peca):
         self.pecasJogadas.append(peca)
+        
     def detectaColisao(self,colisao):
+        i = 0
         for peca in self.jogador.lista_de_Pecas:
-            peca.detectaColisao(colisao)
+            if peca.detectaColisao(colisao):
+                if self.jogador.possoJogarEssaPeca(peca):
+                    self.pecasJogadas.append(peca) 
+                    self.jogador.lista_de_Pecas.remove(peca)   
+            i+=1
+        
             
     def desenharPecasdoJogador(self,tela):
         x = 475
@@ -155,8 +163,7 @@ class Jogo:
                 
     def desenharPecaJogada(self,tela):
         x= 610
-        y= 300
-        
+        y= 300   
         for peca in self.pecasJogadas:
             peca.desenhar(tela,x,y)
          
