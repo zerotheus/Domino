@@ -33,7 +33,7 @@ class Jogo:
         self.addParticipante(Jogador("PowerGuido"))     
         self.pecasParaSortear = self.caixaDeDomino.getPecas()
         self.buxaDeSena = self.pecasParaSortear[27]
-        self.jogadorAtual = 0
+        self.jogadorAtual:int = 0
         pass
     
     def iniciar(self):
@@ -109,19 +109,21 @@ class Jogo:
     def autoPlay(self):
         i = 0
         passaramAvez = 0
-        while(((not self.alguemVenceu()))):
-            for p in self.participantes:
-                passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
-                print("out",self.pecaLivreLadoDireito)
-                print("out",self.pecaLivreLadoEsquerdo)
-                i+=1
-                print(i)
-                if(passou):
-                    passaramAvez+=1
-                    if(passaramAvez == 4):
-                        print("todos passaram")
-                        return
-                else:
-                    passaramAvez = 0
+        while((not self.alguemVenceu()) and self.participantes[self.jogadorAtual %4] != self.jogador):
+            p = self.participantes[self.jogadorAtual %4]
+            passou=p.iaJogue(self.pecaLivreLadoEsquerdo,self.pecaLivreLadoDireito,self)
+            print("out",self.pecaLivreLadoDireito)
+            print("out",self.pecaLivreLadoEsquerdo)
+            self.jogadorAtual+=1
+            i+=1
+            print(i)
+            if(passou):
+                passaramAvez+=1
+                if(passaramAvez == 4):
+                    print("todos passaram")
+                    return
+            else:
+                passaramAvez = 0
         print(self.alguemVenceu())
+        print()
         print(i)
