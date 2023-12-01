@@ -41,9 +41,9 @@ class Jogador:
                 return True
         return False
     
-    def desenharMinhasPecas(self):
+    def desenharMinhasPecas(self,tela,x,y):
         for peca in self.lista_de_Pecas:
-            peca.desenhar()
+            peca.desenhar(tela,x,y)
             
     def listarMinhasPecas(self):
         print("Minha quantidade de pecas e", len(self.lista_de_Pecas))

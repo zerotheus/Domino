@@ -14,9 +14,11 @@ TELA_ALTURA = 720
 def start():
     jogo = Jogo()
     relogio = pygame.time.Clock()
-
+    
     rodando = True
+    jogo.iniciar()
     jogo.desenharTela()
+
     while rodando:
         relogio.tick(30)
     
@@ -26,5 +28,8 @@ def start():
                 rodando = False
                 pygame.quit()
                 quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print("clicou")
+                jogo.detectaColisao(pygame.mouse.get_pos())
     
 start()

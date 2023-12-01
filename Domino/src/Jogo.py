@@ -16,14 +16,11 @@ class Jogo:
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
-        self.caixaDeDomino:CaixaDeDomino = None
         self.pecasJogadas:list[Peca] = []
         self.buxaDeSena:Peca = None 
         self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
         self.pecaLivreLadoDireito:Peca = None#pra cima direita
-        self.pecasParaSortear:list[Peca] = []
         self.participantes:list[Jogador] = []
-        self.jogador = None
         self.caixaDeDomino = CaixaDeDomino()
         print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
@@ -50,13 +47,10 @@ class Jogo:
         pass
 
     def desenharTela(self):
-        lado1 = Lado(0)
-        lado2 = Lado(0)
-        
-        peca = Peca(lado1,lado2)
         cenarioRetangulo = pygame.Rect(0, 0, TELA_LARGURA, TELA_ALTURA)
         tela.blit(self.IMAGEM_DE_FUNDO,cenarioRetangulo)
-        peca.desenhar(tela)
+        self.desenharPecasdoJogador(tela)
+        self.desenharPecasdoAdversario(tela)
         pygame.display.update()
 
     def addParticipante(self, participante):
