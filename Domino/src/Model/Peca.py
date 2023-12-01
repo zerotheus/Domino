@@ -21,11 +21,14 @@ class Peca:
     def getPosicaoY(self,y):
         self.posicaoY = y
     
-    def conectar(self,peca:Peca) -> bool:
+    def conectar(self,peca:Lado) -> bool:
         return self.osLadosConectam(peca)
         
-    def osLadosConectam(self,peca) -> bool:
+    def osLadosConectam(self,peca:Lado) -> bool:
         return self.ladoSuperior.conectaComEstaPeca(peca) or self.ladoInferior.conectaComEstaPeca(peca)
+    
+    def verificaSeConecta(self,peca:Lado):
+        return self.ladoSuperior.verificaSemConexao(peca) or self.ladoInferior.verificaSemConexao(peca)
         
     def getConexaoSuperior(self):
         print("conexao superior")

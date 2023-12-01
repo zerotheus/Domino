@@ -16,12 +16,11 @@ class Jogo:
     FONTE_JOGO = pygame.font.SysFont('arial',50)
 
     def __init__(self) -> None:
-        self.pecasJogadas:list[Peca] = [] 
-        self.pecaLivreLadoEsquerdo:Peca = None#pra cima esquerda
-        self.pecaLivreLadoDireito:Peca = None#pra cima direita
+        self.pecasJogadas:list[Peca] = []
+        self.pecasNaEsq:list[Peca] = [] 
+        self.pecasNaDir:list[Peca] = [] 
         self.participantes:list[Jogador] = []
         self.caixaDeDomino:CaixaDeDomino = CaixaDeDomino()
-        print(self.caixaDeDomino)
         self.jogador = Jogador("Sofia dahPuta")
         self.addParticipante(self.jogador)
         self.addParticipante(Jogador("Yasmin Yaz Bollaz"))
@@ -92,8 +91,8 @@ class Jogo:
     
     def aindaEhPossivelDeJogar(self):
         for p in self.participantes:
-            if(p.possoJogar(self.pecaLivreLadoEsquerdo.meDeSeuLadoLivre(),self.pecaLivreLadoDireito.meDeSeuLadoLivre())):
-                return True
+            if(p.possoJogar(self.encaixeEsquerdo,self.encaixeDireito)):
+                return True    
         return False
     
     def alguemVenceu(self):
@@ -131,12 +130,33 @@ class Jogo:
         i = 0
         for peca in self.jogador.lista_de_Pecas:
             if peca.detectaColisao(colisao):
-                if self.jogador.possoJogarEssaPeca(peca):
-                    self.pecasJogadas.append(peca) 
-                    self.jogador.lista_de_Pecas.remove(peca)   
+                if self.jogador.possoJogarEssaPeca(peca,self.encaixeDireito,self.encaixeEsquerdo):
+                    if(self.conectaDosDoisLados(peca)):
+                        print("Foram dois")
+                        self.jogador.jogadorJogue(i)
+                        #TODO por a escolha nesse caso
+                    elif self.encaixeDireito.conecta(peca.ladoSuperior) or self.encaixeDireito.conecta(peca.ladoInferior):
+                        pecaJogada:Peca=self.jogador.jogadorJogue(i)
+                        print(pecaJogada.meDeSeuLadoLivre().getValor())
+                        self.encaixeDireito=pecaJogada.meDeSeuLadoLivre()
+                        self.pecasNaDir.append(pecaJogada) 
+                    elif self.encaixeEsquerdo.conecta(peca.ladoSuperior) or self.encaixeEsquerdo.conecta(peca.ladoInferior): 
+                        pecaJogada:Peca=self.jogador.jogadorJogue(i)
+                        print(pecaJogada.meDeSeuLadoLivre().getValor())
+                        self.encaixeEsquerdo = pecaJogada.meDeSeuLadoLivre()
+                        self.pecasNaEsq.append(pecaJogada) 
+                    #self.pecasJogadas.append(peca)
+                    self.jogadorAtual+=1
+                    self.iaJogue()
+                    return    
             i+=1
+    
+    def conectaDosDoisLados(self,peca:Peca):
+        if(peca.ladoSuperior.getValor() == self.encaixeDireito.getValor()
+           and peca.ladoInferior.getValor() == self.encaixeEsquerdo.getValor()):
+            return True    
+        return False    
         
-            
     def desenharPecasdoJogador(self,tela):
         x = 475
         y = 635
@@ -166,5 +186,8 @@ class Jogo:
         y= 300   
         for peca in self.pecasJogadas:
             peca.desenhar(tela,x,y)
-         
+        for peca in self.pecasNaEsq:
+            peca.desenhar(tela,400,200)
+        for peca in self.pecasNaDir:
+            peca.desenhar(tela,800,400)
         
